@@ -1,0 +1,206 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --canvas: #fafafa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --border-hover: #cbd5e1;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --actual-wind: #047857;
+    --forecast-wind: #b45309;
+    --alert-bg: #fffbeb;
+    --alert-border: #fde68a;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--canvas);
+    color: var(--text-primary);
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Tactile micro-interaction feedback - Exponential deceleration */
+.btn-tactile {
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  user-select: none;
+}
+.btn-tactile:active {
+  transform: scale(0.97);
+}
+
+/* Custom Minimalist Range Slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+input[type="range"]:hover {
+  background: #cbd5e1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0f172a;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), background-color 150ms ease;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  transform: scale(1.15);
+  background: #1e293b;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #0f172a;
+  border: 2px solid #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1), background-color 150ms ease;
+}
+
+input[type="range"]:active::-moz-range-thumb {
+  transform: scale(1.15);
+  background: #1e293b;
+}
+
+/* Performance Optimization: CSS Containment for offscreen snap sections */
+.snap-start {
+  content-visibility: auto;
+  contain-intrinsic-size: 580px;
+}
+
+/* Custom sleek scrollbar for dense tables */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Authored Focal Motion: Exponential entrance sequence & energy pulse */
+@keyframes cockpitEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes energyPulse {
+  0%, 100% {
+    opacity: 0.9;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 0 5px rgba(16, 185, 129, 0);
+  }
+}
+
+.animate-entrance {
+  animation: cockpitEntrance 380ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.pulse-indicator {
+  animation: energyPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Accessibility: Motion sensitivity — preserve state-feedback transitions */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .btn-tactile:active {
+    transform: none !important;
+  }
+}
+
+/* Touch: bump slider thumb + interactive controls to 44px minimum */
+@media (pointer: coarse) {
+  input[type="range"]::-webkit-slider-thumb {
+    width: 26px;
+    height: 26px;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 26px;
+    height: 26px;
+  }
+  input[type="range"] {
+    height: 8px;
+  }
+}
+
+/* Hide browser number spinners — we use our own controls */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Safe-area insets for notched/home-bar devices */
+body {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Print: hide chrome, controls, sidebar */
+@media print {
+  header,
+  aside,
+  nav,
+  .snap-start footer {
+    display: none !important;
+  }
+  .snap-start {
+    content-visibility: visible;
+    height: auto !important;
+    page-break-inside: avoid;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+}

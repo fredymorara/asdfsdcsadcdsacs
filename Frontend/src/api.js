@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:5000";
+const BASE_URL = import.meta.env.VITE_API_URL || "";
 
 export async function fetchForecastAnalysis(date = "2026-01-05", cutoffHour = 12, signal) {
   const url = `${BASE_URL}/api/forecast-analysis?date=${encodeURIComponent(date)}&cutoff_hour=${encodeURIComponent(cutoffHour)}`;
@@ -24,7 +24,7 @@ export async function fetchForecastAnalysis(date = "2026-01-05", cutoffHour = 12
     if (err.name === 'AbortError') {
       throw new Error("Request to BMRS Analysis API timed out after 8 seconds.", { cause: err });
     }
-    throw new Error(err.message || "Failed to connect to forecast backend service at http://127.0.0.1:5000", { cause: err });
+    throw new Error(err.message || "Failed to connect to forecast backend service", { cause: err });
   } finally {
     clearTimeout(timeoutId);
   }
